@@ -24,25 +24,42 @@ def load_data(filename):
     df = df.fillna(method = 'ffill')
     return df
 
-def process_data(df):
-    # Xây dựng vocab cho word và tag
+def build_vocab(df):
+    '''
+    Function for buliding vovab for dataset include list of words and tags in dataset, convert sentence
+    to number vector
+    Input:
+        df: dataframe contains word, POS, tag 
+    Output:
+        word2idx = {'word':index} 
+        idx2word = {index:'word'}
+        tag2idx = {'tag':index}
+        idx2word = {index:'tag'}
+        num_tag: number of tag appear in dataset
+        words: list of words appear in dataset
+        tags: list of tags appear in dataset
+    '''
+
+    # Build vocab of words and tags for dataset
     words = list(df['word'].unique())
     tags = list(df['tag'].unique())
 
-    # Tạo dict word to index, thêm 2 từ đặc biệt là Unknow và Padding
+    # Build dictionary word to index {'word':index} add "UNK" for word haven't in dataset and "PAD" for padding
     word2idx = {w : i + 2 for i, w in enumerate(words)}
     word2idx["UNK"] = 1
     word2idx["PAD"] = 0
 
-    # Tạo dict tag to index, thêm 1 tag đặc biệt và Padding
+    # Build dictionary tag to index {'tag':index} add "PAD" for padding
     tag2idx = {t : i + 1 for i, t in enumerate(tags)}
     tag2idx["PAD"] = 0
 
-    # Tạo 2 dict index to word và index to tag
+    # Build dictionary index to word {index:'word'} and index to tag {index:'tag'}
     idx2word = {i: w for w, i in word2idx.items()}
     idx2tag = {i: w for w, i in tag2idx.items()}
+
+    #The number of different tags appearing in the dataset
     num_tag = df['tag'].nunique()
-    # Save data
+    
     return word2idx, tag2idx, idx2word, idx2tag, num_tag, words, tags
 
 def build_model(num_tags,words, hidden_size = 50):
@@ -61,7 +78,7 @@ def build_model(num_tags,words, hidden_size = 50):
     return model
 
 df = load_data('data/emandai.xlsx')
-word2idx, tag2idx, idx2word, idx2tag, num_tag,words, tags = process_data(df)
+word2idx, tag2idx, idx2word, idx2tag, num_tag,words, tags = build_vocab(df)
 
 class TextResBody(BaseModel):
     a: list = []

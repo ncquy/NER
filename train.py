@@ -222,8 +222,4 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'val'], loc='upper left')
 
-<<<<<<< HEAD
 plt.show()
-=======
-plt.show()
->>>>>>> 3eb1fc773fb57cdb17088da1e4deddb80ded1b96
