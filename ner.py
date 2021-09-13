@@ -89,7 +89,3 @@ def ner(s):
             if i!="PAD": temp.append(i)
         result.append(temp)
     return (result)
-
-
-   
-
