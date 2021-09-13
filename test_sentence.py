@@ -55,7 +55,7 @@ def build_model(num_tags,words, hidden_size = 50):
     return model
 
 def process(element):
-    df = load_data('data/data_train_test.xlsx')
+    df = load_data('data/emandai.xlsx')
     word2idx, tag2idx, idx2word, idx2tag, num_tag,words, tags = process_data(df)
     X = []
 
