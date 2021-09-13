@@ -122,23 +122,33 @@ async def NER_model(request: TextResBody):
     result_json = dict(zip(sen, result))
     return result_json
 
-# 'B-LOC', 'B-ORG', 'I-LOC', 'B-PER', 'I-PER', 'I-ORG', 'B-MISC', 'I-MISC'
 
-def find_index_entity(start,a,b):
-    entity = b.split('-')[1]
-    find='I-'+ entity
-    result = start
-    if (start == len(a)-1):
-        result = start
+
+def find_index_entity(start_index,source_string,target_entity):
+    '''
+    Function for processing data, convert raw data to numeric data
+    Input:
+        start_index: start index of the entity in the string
+        source_string: string to find entity
+        target_entity: Tag
+    Output:
+        end_index: end index of the entity in the string
+        entity_name: name of entity is contained in input string
+    '''
+    entity_name = target_entity.split('-')[1]
+    find_value = 'I-'+ entity_name
+    end_index = start_index
+    if (start_index == len(source_string)-1):
+        end_index = start_index
     else:
-        i = start +1
-        while(i<len(a)):
-            if(a[i]==find):
-                result = i
+        i = start_index +1
+        while(i<len(source_string)):
+            if(source_string[i] == find_value):
+                end_index = i
                 i+=1
             else:
                 break
-    return result, entity
+    return end_index, entity_name
 
 
 if __name__ == "__main__":
