@@ -24,11 +24,6 @@ def load_data(filename):
     df = df.fillna(method = 'ffill')
     return df
 
-<<<<<<< HEAD
-=======
-df = load_data('data/emandai.xlsx')
-
->>>>>>> 3eb1fc773fb57cdb17088da1e4deddb80ded1b96
 def process_data(df):
     # Xây dựng vocab cho word và tag
     words = list(df['word'].unique())
@@ -65,10 +60,7 @@ def build_model(num_tags,words, hidden_size = 50):
     model.summary()
     return model
 
-<<<<<<< HEAD
 df = load_data('data/emandai.xlsx')
-=======
->>>>>>> 3eb1fc773fb57cdb17088da1e4deddb80ded1b96
 word2idx, tag2idx, idx2word, idx2tag, num_tag,words, tags = process_data(df)
 
 class TextResBody(BaseModel):
