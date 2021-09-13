@@ -6,21 +6,31 @@ from underthesea import word_tokenize
 def tokenizer(row):
     return word_tokenize(row, format="text")
 
-def find_index_entity(start,a,b):
-    entity = b.split('-')[1]
-    find='I-'+ entity
-    result = start
-    if (start == len(a)-1):
-        result = start
+def find_index_entity(start_index,source_string,target_entity):
+    '''
+    Function for processing data, convert raw data to numeric data
+    Input:
+        start_index: start index of the entity in the string
+        source_string: string to find entity
+        target_entity: Tag
+    Output:
+        end_index: end index of the entity in the string
+        entity_name: name of entity is contained in input string
+    '''
+    entity_name = target_entity.split('-')[1]
+    find_value = 'I-'+ entity_name
+    end_index = start_index
+    if (start_index == len(source_string)-1):
+        end_index = start_index
     else:
-        i = start +1
-        while(i<len(a)):
-            if(a[i]==find):
-                result = i
+        i = start_index +1
+        while(i<len(source_string)):
+            if(source_string[i] == find_value):
+                end_index = i
                 i+=1
             else:
                 break
-    return result, entity
+    return end_index, entity_name
 
 dict_color = {'SYS.STREET_NUMBER': "#8ef", 'SYS.STREET': "#faa",
 'SYS.DISTRICT': "#afa",'SYS.CITY': '#bca',  'SYS.WARD': "#fea",
